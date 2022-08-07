@@ -22,6 +22,13 @@ def generate_question(doc, question_type):
     sent = ''
 
     for i, token in enumerate(doc):
+        if token.pos_ == 'AUX' or token.pos_ == 'ADV':
+            sent = doc[:i].text + ' ' + doc[i + 1:].text
+            print(sent)
+            doc = nlp(sent)
+            break
+
+    for i, token in enumerate(doc):
         if token.tag_ == 'PRP' and doc[i + 1].tag_ == 'VBP':
             sent = 'do ' + doc[i].text
             sent = sent + ' ' + doc[i + 1:].text
